@@ -1,0 +1,1 @@
+web: gunicorn Instagranny.wsgi --log-file -

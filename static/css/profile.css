@@ -1,0 +1,81 @@
+body {
+    background-color: rgb(228, 228, 228);
+}
+/* navigation bar section*/
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position:sticky;
+    background-color: rgb(167, 167, 167);
+    height: 82px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    box-shadow: 0 15px 6px -6px rgb(129, 129, 129);       
+}
+
+.nav_profile {
+    font-size: 20px;
+    padding: 5px 25px;
+    background-color:rgb(198, 198, 198);
+    border-radius:12px;
+    margin: 15px;
+        
+}
+
+.nav_profile:hover {
+    background-color:brown;
+    color:aliceblue;
+}
+
+.nav_search {
+    float:right ;
+    padding: 5px 25px;
+    margin: 30px 15px;
+    border-radius:12px;          
+}
+
+.nav_title {
+    font-size:xx-large;
+    color: rgb(47, 47, 47);
+}
+
+/* profile card*/
+
+.post {
+    display: flex;
+    flex-direction: column;
+    height:fit-content;
+    background-color: brown;
+    margin:25px 30%;
+    border-radius: 12px;
+    min-width: 30%;
+       
+}
+
+
+
+.container{
+    display: flex;
+    flex-direction: column;
+    height:fit-content;
+    background-color: brown;
+    border-radius: 12px;
+    width: 30%;
+    
+    
+}
+
+.sidenav {
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 160px; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: #111; /* Black */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+  }
+
+
