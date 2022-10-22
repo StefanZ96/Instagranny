@@ -50,9 +50,9 @@ a {
     flex-direction: column;
     height:fit-content;
     background-color: brown;
-    margin:25px 30%;
+    margin:25px;
     border-radius: 12px;
-    min-width: 30%;
+    
        
 }
 

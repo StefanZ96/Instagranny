@@ -27,20 +27,21 @@
             
     
         </nav>
-        <div class="row mt-1 sticky-top" style="top:13%">
+
+        <div class="row mt-1 gx-0 sticky-xl-top" style="top:13%">
             <div class="col">
                 {% if request.user.username == user.username %}
-                    <button class="nav_profile float-end me-5" ><a href="/logout" style="text-decoration:none; color:white" >logout</a></button>
+                    <button class="logout float-end me-5" ><a href="/logout" style="text-decoration:none; color:white" >logout</a></button>
                 {%endif%}
             </div>
         </div>
-        <div class="row">
+        <div class="row gx-0">
             
-            <div class="col-3  ms-5 container sticky-top" style="top: 13%">
+            <div class="col-lg-3 col-md-8 col-sm-10 mb-4 container sticky-xl-top" style="top: 13%">
                 <div class="row mt-3 img">
-                    <img class="abc img-fluid" src="{{user.profile.profileimg.url}}">
+                    <img class="img-fluid" src="{{user.profile.profileimg.url}}">
                 </div>
-                <div class="row">
+                <div >
                     <div class="col-4 mt-4 ms-3 ">
                         <h4>@{{user.username}} </h4>
                     </div>
@@ -57,12 +58,14 @@
                     </div>
                     {%endif%}
                     {% if request.user.username == user.username %}
-                    <div class="col-3 mt-1  ">                        
-                        <button class=" nav_profile float-end"><a href="{%url "profile_update" user.profile.pk%}"style="text-decoration:none; color:white" >Update Profile</a></button>
-                    </div>
-                    <div class="col-4 mt-1 ">                        
-                        <button class=" nav_profile float-end"><a href="{%url "password_update" user.profile.pk%}"style="text-decoration:none; color:white" >Change Password</a></button>
-                    </div>
+                        <div class="row">
+                            <div class="col mt-1  ">                        
+                                <button class=" nav_profile float-end"><a href="{%url "profile_update" user.profile.pk%}"style="text-decoration:none; color:white" >Update Profile</a></button>
+                            </div>
+                            <div class="col mt-1 ">                        
+                                <button class=" nav_profile float-end"><a href="{%url "password_update" user.profile.pk%}"style="text-decoration:none; color:white" >Change Password</a></button>
+                            </div>
+                        </div>
                     {%endif%}
                                         
                 </div>       
@@ -85,9 +88,9 @@
             </div>     
         
 
-            <div class="col-5 ms-5 p-0 ms-3">
+            <div class="col-lg-6 col-md-8 col-sm-10 me-auto ms-auto"> 
                 {%for post in posts%}
-                <div class="container mb-3">
+                <div class="container mb-3 align-self-center">
                     {%if post.creator == request.user%}
                     <div class="row">
                         {% csrf_token %}
@@ -137,7 +140,7 @@
                 </div>
                 {% endfor %}
             </div>
-            <div class="col-2 p-0"></div>
+            
         
         </div> 
 

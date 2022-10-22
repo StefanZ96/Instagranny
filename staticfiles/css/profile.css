@@ -1,5 +1,6 @@
 body {
     background-color: rgb(228, 228, 228);
+    overflow-x: hidden;
 }
 /* navigation bar section*/
 nav {
@@ -40,6 +41,18 @@ nav {
     color: rgb(47, 47, 47);
 }
 
+.logout {
+    font-size: 20px;
+    background-color:rgb(198, 198, 198);
+    border-radius:12px;
+    margin: 15px;
+        
+}
+.logout:hover {
+    background-color:brown;
+    color:aliceblue;
+}
+
 /* profile card*/
 
 .post {
@@ -60,22 +73,12 @@ nav {
     flex-direction: column;
     height:fit-content;
     background-color: brown;
+    margin:2%;
     border-radius: 12px;
     width: 30%;
-    
+    justify-content:center;
     
 }
 
-.sidenav {
-    height: 100%; /* Full-height: remove this if you want "auto" height */
-    width: 160px; /* Set the width of the sidebar */
-    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-    z-index: 1; /* Stay on top */
-    top: 0; /* Stay at the top */
-    left: 0;
-    background-color: #111; /* Black */
-    overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 20px;
-  }
 
 
