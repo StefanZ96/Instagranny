@@ -15,6 +15,14 @@ from django.utils import timezone
 from .forms import PostForm, CommForm
 from django.db.models import Q
 
+from django.template.loader import render_to_string
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from django.core.mail import EmailMessage
+
+from .tokens import account_activation_token
+
 # Create your views here.
 def index(request):
     return render(request, "index.html")    
@@ -25,6 +33,41 @@ def AboutUs(request):
 def FAQ(request):
     return render(request, "FAQ.html")
 
+
+def activate_email(request, user, email):
+    mail_subject = 'Welcome to Instagranny!'
+    message = render_to_string('account_activation.html', {
+        'user': user.username,
+        'domain': get_current_site(request).domain,
+        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        'token': account_activation_token.make_token(user),
+        'protocol': 'https' if request.is_secure() else 'http'
+    })
+    verification_email = EmailMessage(mail_subject, message, to=[email])
+    if verification_email.send():
+        messages.success(request, f"Thank you for registration, {user.username}! Please check your email, as we sent you confirmatin link to activate your account!")
+    else:
+        messages.error(request, f'Problem sending confirmation email to {email}, check if you typed it correctly.')
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+
+        messages.success(request, 'Thank you for your email confirmation. Now you can log into your account.')
+        return redirect('login')
+    else:
+        messages.error(request, 'Activation link is invalid!')
+    
+    return redirect('index')
+
+
 def Register(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -33,26 +76,29 @@ def Register(request):
         password2 = request.POST['password2']
         
         if User.objects.filter(username=username):
-            messages.error(request, "Username already exist! Please try some other username.")
+            messages.error(request, "Username already exists! Please try some other username.")
             return redirect('Register')
         
         if User.objects.filter(email=email).exists():
-            messages.error(request, "Email Already Registered!!")
+            messages.error(request, "Email already registered!")
             return redirect('Register')
         
         if len(username)>10:
-            messages.error(request, "Username must be under 20 charcters!!")
+            messages.error(request, "Username must be under 10 charcters!")
             return redirect('Register')
         
         if password != password2:
-            messages.error(request, "Passwords didn't matched!!")
+            messages.error(request, "Passwords do not match!")
             return redirect('Register')       
         
         user = User.objects.create_user(username, email, password)
-        user.save
+        user.is_active=False
+        user.save()
         user_model = User.objects.get(username=username)
         new_profile = Profile.objects.create(user=user_model)
         new_profile.save()
+        
+        activate_email(request, user, email)
        
         
         return redirect("index")

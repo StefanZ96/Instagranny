@@ -21,3 +21,4 @@ sqlparse==0.4.3
 tomli==2.0.1
 tzdata==2022.4
 whitenoise==6.2.0
+six==1.16.0

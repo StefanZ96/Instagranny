@@ -9,19 +9,19 @@
     <link rel="stylesheet" href= "{% static "css/profile.css" %}" media="screen">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
-    <body>
+    <body class="page">
 
         <nav class="sticky-top">
     
-            <a class="nav_profile" style="color: black; text-decoration:none"  href="/feed">Back to feed!</a>
-            <div class="nav_title" style="font-family:Lobster Two">Instagranny</div>
+            <a class="nav_profile" style="color:black; text-decoration:none;"  href="/feed">Back to feed!</a>
+            <div class="nav_title" style="font-family:Lobster Two; color:rgb(227, 202, 195);">Instagranny</div>
             <form method="GET" action="{%url "people_search" %}">
                 {% csrf_token %}
                 <div class="input-group mt-2 me-4">
                     <div class="form-outline">
                         <input type="search" id="form1" class="form-control" placeholder="Search people" name="query" value="{{request.GET.query}}" />
                     </div>
-                    <button type="submit" class="btn btn-light">Search</button>
+                    <button type="submit" class="btn btn-light btn-sm">Search</button>
                 </div>            
             </form>
             
@@ -29,30 +29,30 @@
         </nav>
 
         <div class="row mt-1 gx-0 sticky-xl-top" style="top:13%">
-            <div class="col">
+            <div class="col  mb-5">
                 {% if request.user.username == user.username %}
-                    <button class="logout float-end me-5" ><a href="/logout" style="text-decoration:none; color:white" >logout</a></button>
+                    <button class="nav_profile float-end py-1 " ><a href="/logout" style="text-decoration:none; color:black;" >logout</a></button>
                 {%endif%}
             </div>
         </div>
         <div class="row gx-0">
             
-            <div class="col-lg-3 col-md-8 col-sm-10 mb-4 container sticky-xl-top" style="top: 13%">
+            <div class="col-lg-3 col-md-8 col-sm-10 mb-4 container sticky-xl-top " style="top: 13%">
                 <div class="row mt-3 img">
                     <img class="img-fluid" src="{{user.profile.profileimg.url}}">
                 </div>
                 <div >
                     <div class="col-4 mt-4 ms-3 ">
-                        <h4>@{{user.username}} </h4>
+                        <h4 style="color:rgb(227, 202, 195)">@{{user.username}} </h4>
                     </div>
                     {% if request.user.username != user.username %}
                     <div class="col-4 mt-1 ms-4 "> 
                         <form method="POST" action="{%url "add_follower" profile.pk%}">  
                         {% csrf_token %}
                         {% if followed == False%}                     
-                        <button class="nav_profile" type="submit">Follow!</button>
+                        <button class="comm_button float-start" type="submit">Follow!</button>
                         {% else %}
-                        <button class="nav_profile" type="submit">Unfollow!</button>
+                        <button class="comm_button float-start" type="submit">Unfollow!</button>
                         {%endif%}
                         </form>
                     </div>
@@ -60,10 +60,10 @@
                     {% if request.user.username == user.username %}
                         <div class="row">
                             <div class="col mt-1  ">                        
-                                <button class=" nav_profile float-end"><a href="{%url "profile_update" user.profile.pk%}"style="text-decoration:none; color:white" >Update Profile</a></button>
+                                <button class=" comm_button float-start ms-2"><a href="{%url "profile_update" user.profile.pk%}"style="text-decoration:none; color:black;" >Update Profile</a></button>
                             </div>
                             <div class="col mt-1 ">                        
-                                <button class=" nav_profile float-end"><a href="{%url "password_update" user.profile.pk%}"style="text-decoration:none; color:white" >Change Password</a></button>
+                                <button class=" comm_button float-start ms-2"><a href="{%url "password_update" user.profile.pk%}"style="text-decoration:none; color:black" >Change Password</a></button>
                             </div>
                         </div>
                     {%endif%}
@@ -71,17 +71,17 @@
                 </div>       
                     
                 
-                <div class="mt-3 pb-2 ps-4 ms-1 border-2 border-bottom border-dark rounded">
-                    <h4> {{user.profile.bio}} </h4>
+                <div class="mt-3 pb-2 ps-4 ms-1 border-2 border-bottom rounded">
+                    <h4 style="color:rgb(227, 202, 195)"> {{user.profile.bio}} </h4>
                 </div>
                 <div class="row">
-                    <div class="col-6 border-2 border-end border-dark"> 
-                        <h3 class="text-center">Followers</h3>
-                        <h2 class="text-center">{{profile.followers.all.count}}</h2>
+                    <div class="col-6 border-2 border-end"> 
+                        <h3 class="text-center" style="color:rgb(227, 202, 195)">Followers</h3>
+                        <h2 class="text-center" style="color:rgb(227, 202, 195)">{{profile.followers.all.count}}</h2>
                     </div>
                     <div class="col-6"> 
-                        <h3 class="text-center">Following</h3>
-                        <h2 class="text-center">{{following_count}}</h2>
+                        <h3 class="text-center" style="color:rgb(227, 202, 195)">Following</h3>
+                        <h2 class="text-center" style="color:rgb(227, 202, 195)">{{following_count}}</h2>
                     </div>
                 </div>
                 
@@ -94,7 +94,7 @@
                     {%if post.creator == request.user%}
                     <div class="row">
                         {% csrf_token %}
-                        <button type="submit" class="col-2 ms-2 mt-2 nav_profile"><a href="{%url "post_delete" post.pk%}"style="text-decoration:none; color:white" >Delete</a></button>
+                        <button type="submit" class="col-2 ms-2 mt-2 nav_profile"><a href="{%url "post_delete" post.pk%}"style="text-decoration:none; color:black" >Delete</a></button>
                     </div>
                     {%endif%}
                     {%if post.photo%}
@@ -102,39 +102,27 @@
                     {%endif%}
                     <div class="row ms-3 mt-2">
                         <div class="col">
-                            <h4>@{{post.creator}}</h4>
+                            <h4 style="color:rgb(227, 202, 195)">@{{post.creator}}</h4>
                         </div>
                         <div class="col">
-                            <h4 class = "float-end me-2">{{post.created_at}}</h4>
+                            <h4 class = "float-end me-2" style="color:rgb(227, 202, 195)">{{post.created_at}}</h4>
                         </div>
                     </div>
-                    <p class="h5 ms-4 me-4 mb-5">{{post.description}}</p>
+                    <p class="h5 ms-4 me-4 mb-5" style="color:rgb(227, 202, 195)">{{post.description}}</p>
                     
                     <div class="row">
                             <div class="col">
-                                <h4 class="ms-4 ">{{post.likes.all.count}} Likes</h4>
+                                <h4 class="ms-4" style="color:rgb(227, 202, 195)">{{post.likes.all.count}} Likes</h4>
                             </div>
                             <div class="col">
-                                <h4 class="float-end me-4">{{post.comments.all.count}} Comments</h4>
+                                <h4 class="float-end me-4" style="color:rgb(227, 202, 195)">{{post.comments.all.count}} Comments</h4>
                             </div>
                     </div>
-                    <div class="row mb-3">
-                        <div class="col ms-1">
-                            {%if liked == False %}
-                            <form action= "{% url "like_post" post.pk %}" method="POST" >
-                            {% csrf_token %}
-                            <button type="submit" name="post_id" value="{{post.id}}" class=" nav_profile mt-2 float-start">Like!</button>
-                            </form>
-                            {%else%}
-                            <form action= "{% url "like_post" post.pk %}" method="POST" >
-                            {% csrf_token %}
-                            <button type="submit" name="post_id" value="{{post.id}}" class=" nav_profile mt-2 float-start">Unlike!</button>
-                            </form>
-                            {%endif%}
-                        </div>
-                        <div class="col ms-5">
-                            <button  class="nav_profile mt-2 me-4 float-end" ><a href="{% url "post_detail" post.pk %}" style="text-decoration:none; color:black">Comment!</a> </button>
-                        </div>
+                    <div class="row mb-3 justify-content-center">
+                        
+                    
+                            <button  class="nav_profile col-lg-4 col-md-6 col-sm-8 col-xs-10 " ><a href="{% url "post_detail" post.pk %}" style="text-decoration:none; color:black">Check Post</a> </button>
+                        
                     </div>
                         
                 </div>

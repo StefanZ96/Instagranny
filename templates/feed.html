@@ -6,14 +6,14 @@
     <meta name="keywords" content="Instagranny">
     <meta name="description" content="">
     <title>Feed</title>
-    <link rel="stylesheet" href= "{% static "css/post_detail.css" %}" media="screen">
+    <link rel="stylesheet" href= "{% static "css/feed.css" %}" media="screen">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
-    <body>
+    <body class="page">
         <nav class="sticky-top">
     
             <a href="{% url "profile" user.profile.pk %}"  class="nav_profile" style="color: black; text-decoration:none">{{request.user}} </a>
-            <div class="nav_title">Instagranny</div>
+            <div class="nav_title" style="font-family:Lobster Two; color:rgb(227, 202, 195);">Instagranny</div>
             
             <form method="GET" action="{%url "people_search" %}">
                 {% csrf_token %}
@@ -21,9 +21,10 @@
                     <div class="form-outline">
                         <input type="search" id="form1" class="form-control" placeholder="Search people" name="query" value="{{request.GET.query}}" />
                     </div>
-                    <button type="submit" class="btn btn-light">Search</button>
+                    <button type="submit" class="btn btn-light btn-sm">Search</button>
                 </div>            
             </form>
+            
     
         </nav>
 
@@ -32,11 +33,11 @@
                 <form action="" method="POST" enctype="multipart/form-data">
                 {%csrf_token%}
                 {{form}}
-                <button type="submit" class="form_button mt-2">Post!</button>
+                <button type="submit" class="comm_button mt-2">Post!</button>
                 </form>
             </div>
         </div>
-        <div class="col">
+        <div class="col ms-1 me-1">
             {%for post in feed_list%}
         
             <div class="container col-lg-6 col-md-10 col-sm-11 col-xs-12">
@@ -45,20 +46,20 @@
                 {%endif%}
                 <div class="row ms-3 mt-2">
                     <div class="col">
-                        <h4><a href="{% url "profile" post.creator.profile.id %}" style="color: black; text-decoration:none">@{{post.creator}}</a></h4>
+                        <h4><a href="{% url "profile" post.creator.profile.id %}" style="color:rgb(227, 202, 195); text-decoration:none">@{{post.creator}}</a></h4>
                     </div>
                     <div class="col">
-                        <h4 class = "float-end me-2">{{post.created_at}}</h4>
+                        <h4 class = "float-end me-2" style="color:rgb(227, 202, 195)">{{post.created_at}}</h4>
                     </div>
                 </div>
-                <p class="h5 ms-4 me-4 mb-5">{{post.description}}</p>
+                <p class="h5 ms-4 me-4 mb-5" style="color:rgb(227, 202, 195)">{{post.description}}</p>
                 
                 <div class="row">
                         <div class="col">
-                            <h4 class="ms-4 ">{{post.likes.all.count}} Likes</h4>
+                            <h4 class="ms-4" style="color:rgb(227, 202, 195)">{{post.likes.all.count}} Likes</h4>
                         </div>
                         <div class="col">
-                            <h4 class="float-end me-4">{{post.comments.all.count}} Comments</h4>
+                            <h4 class="float-end me-4" style="color:rgb(227, 202, 195)">{{post.comments.all.count}} Comments</h4>
                         </div>
                 </div>
                 <div class="row mb-3">
@@ -66,14 +67,14 @@
                         <form action= "{% url "like_post" post.pk %}" method="POST" >                    
                         {% csrf_token %}
                         {%if liked == False %}
-                        <button type="submit" name="post_id" value="{{post.id}}" class=" form_button mt-2 float-start">Like!</button>
+                        <button type="submit" name="post_id" value="{{post.id}}" class=" comm_button mt-2 float-start">Like!</button>
                         {%else%}
-                        <button type="submit" name="post_id" value="{{post.id}}" class=" form_button mt-2 float-start">Unlike!</button>
+                        <button type="submit" name="post_id" value="{{post.id}}" class=" comm_button mt-2 float-start">Unlike!</button>
                         {%endif%}
                         </form>                  
                     </div>
                     <div class="col ms-5">
-                        <button  class="form_button mt-2 me-4" ><a href="{% url "post_detail" post.pk %}" style="color: black; text-decoration:none">Comment!</a> </button>
+                        <button  class="comm_button mt-2 me-4" ><a href="{% url "post_detail" post.pk %}" style="color: black; text-decoration:none">Comment!</a> </button>
                     </div>
                 </div>
                     
